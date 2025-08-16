@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quem ama mais?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      overflow: hidden;
+    }
+    #container {
+      display: block;
+    }
+    #yesScreen {
+      display: none;
+      font-size: 3em;
+      color: white;
+      text-shadow: 2px 2px 5px black;
+      animation: piscar 1s infinite;
+    }
+    @keyframes piscar {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+    button {
+      padding: 10px 25px;
+      font-size: 1.5em;
+      margin: 15px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+      transition: 0.2s;
+    }
+    #sim {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #nao {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    /* Fundo com corações */
+    .hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: #ff1a40;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      color: white;
+      font-size: 20px;
+      animation: float 5s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts" id="hearts"></div>
+
+  <div id="container">
+    <h1>Quem ama mais</h1>
+    <button id="sim">Cauã</button>
+    <button id="nao">Damylle</button>
+  </div>
+
+  <div id="yesScreen">
+    🎉 FINALMENTE!!!!! 🎉<br>
+    Afinal eu smp estive certo né, ehhhhhh smp te falei que com a esquisofrenia nn valia bobona. Mas eu tambem te amo. ok?
+  </div>
+
+  <script>
+    const nao = document.getElementById("nao");
+    const sim = document.getElementById("sim");
+    const container = document.getElementById("container");
+    const yesScreen = document.getElementById("yesScreen");
+    const heartsContainer = document.getElementById("hearts");
+
+    // Botão "Não" fugindo
+    nao.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - nao.clientWidth);
+      const y = Math.random() * (window.innerHeight - nao.clientHeight);
+      nao.style.left = x + "px";
+      nao.style.top = y + "px";
+    });
+
+    // Quando clicar em "Sim"
+    sim.addEventListener("click", () => {
+    container.style.display = "none";
+    document.body.style.background = "#ff1a40";
+    yesScreen.style.display = "block";
+
+    // Tocar música
+    const music = document.getElementById("music");
+    music.play();
+
+    // Soltar corações flutuando
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 20 + "px";
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+        heart.remove();
+        }, 5000);
+    }, 300);
+    });
+
+
+    // Fugir no PC (mouse)
+    nao.addEventListener("mouseover", () => {
+    moveButton();
+    });
+
+    // Fugir no celular (toque)
+    nao.addEventListener("touchstart", () => {
+    moveButton();
+    });
+
+    function moveButton() {
+    const x = Math.random() * (window.innerWidth - nao.clientWidth);
+    const y = Math.random() * (window.innerHeight - nao.clientHeight);
+    nao.style.left = x + "px";
+    nao.style.top = y + "px";
+    }
+  </script>
+
+<audio id="music" src="careless.mp3"></audio>
+
+</body>
+</html>
